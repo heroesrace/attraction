@@ -47,6 +47,7 @@ window.onload = function() {
         console.log(roobicTotal);
 
         // Отображение результатов на странице
+        document.getElementById('netDeposit').innerText = 'Team Target : 975.000$'; // Отображаем чистый депозит
         document.getElementById('netDeposit').innerText = '$' + netDeposit.toFixed(0); // Отображаем чистый депозит
         document.getElementById('cryptoPercentage').innerText = 'Progress:   ' + cryptoPercentage + '%';
         //document.getElementById('roobicPercentage').innerText = 'R' + roobicPercentage + '%';
