@@ -47,9 +47,9 @@ window.onload = function() {
         console.log(roobicTotal);
 
         // Отображение результатов на странице
-        document.getElementById('netDeposit').innerText = 'Money IN:' + netDeposit.toFixed(0) +'$'; // Отображаем чистый депозит
-        document.getElementById('cryptoPercentage').innerText = 'Progress: ' + cryptoPercentage + '%';
-        document.getElementById('roobicPercentage').innerText = 'Team Target : 975.000$, So Missing: ' + roobicPercentage + '$';
+        document.getElementById('netDeposit').innerText = 'Money IN : ' + netDeposit.toFixed(0) +'$'; // Отображаем чистый депозит
+        document.getElementById('cryptoPercentage').innerText = 'Progress : ' + cryptoPercentage + '%';
+        document.getElementById('roobicPercentage').innerText = 'Team Target : 975.000$, So Still Missing: ' + roobicPercentage + '$';
     })
     .catch(error => console.error(error));
 
