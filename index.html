@@ -3,15 +3,792 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetCrypto</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>NetCrypto Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated geometric background */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+        }
+
+        .geometric-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            top: 70%;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #48dbfb, #0abde3);
+            border-radius: 50%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            top: 30%;
+            right: 25%;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff9ff3, #f368e0);
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+            animation-delay: 4s;
+        }
+
+        .shape-4 {
+            bottom: 20%;
+            left: 20%;
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(45deg, #54a0ff, #5f27cd);
+            transform: rotate(45deg);
+            animation-delay: 1s;
+        }
+
+        .shape-5 {
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #00d2d3, #01a3a4);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+                opacity: 0.1;
+            }
+            33% { 
+                transform: translateY(-20px) rotate(120deg) scale(1.1); 
+                opacity: 0.15;
+            }
+            66% { 
+                transform: translateY(20px) rotate(240deg) scale(0.9); 
+                opacity: 0.12;
+            }
+        }
+
+        /* Grid pattern overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 1200px;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            animation: logoFloat 3s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-container i {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 4s ease-in-out infinite;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .metric-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .metric-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: blur(8px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .metric-icon.money {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            animation: pulseRed 2s ease-in-out infinite;
+        }
+
+        .metric-icon.progress {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            animation: pulseGreen 2s ease-in-out infinite;
+        }
+
+        .metric-icon.target {
+            background: linear-gradient(135deg, #ffd93d, #ff9068);
+            animation: pulseOrange 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseRed {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(255, 107, 107, 0); }
+        }
+
+        @keyframes pulseGreen {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(78, 205, 196, 0); }
+        }
+
+        @keyframes pulseOrange {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 217, 61, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(255, 217, 61, 0); }
+        }
+
+        .metric-info h3 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-info p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .metric-value::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .metric-value.money::after {
+            background: linear-gradient(90deg, #ff6b6b, #ee5a52);
+        }
+
+        .metric-value.progress::after {
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+        }
+
+        .metric-value.target::after {
+            background: linear-gradient(90deg, #ffd93d, #ff9068);
+        }
+
+        .progress-container {
+            margin-top: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            border-radius: 6px;
+            transition: width 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item .label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.3); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #4ecdc4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .loading-progress {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .loading-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            border-radius: 2px;
+            animation: loadingProgress 2s ease-in-out infinite;
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .metrics-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .metric-card {
+                padding: 2rem;
+            }
+            
+            .metric-value {
+                font-size: 2.5rem;
+            }
+            
+            .metric-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="netDeposit"></div>
-    <div id="cryptoPercentage"></div>
-    <div id="roobicPercentage"></div>
+    <div class="bg-container">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        <div class="geometric-shape shape-4"></div>
+        <div class="geometric-shape shape-5"></div>
+    </div>
+    
+    <div class="grid-overlay"></div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+            <i class="fas fa-file-excel" style="margin-right: 0.5rem;"></i>
+            Loading Excel data...
+        </div>
+        <div class="loading-progress">
+            <div class="loading-progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard" id="dashboard">
+            <div class="header">
+                <div class="logo-container">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h1 class="title">NetCrypto</h1>
+                <p class="subtitle">Financial Analytics Dashboard</p>
+            </div>
+
+            <div class="metrics-container">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon money">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3>Money In</h3>
+                            <p>Net deposit amount</p>
+                        </div>
+                    </div>
+                    <div class="metric-value money" id="netDeposit">$0</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="label">Status</div>
+                            <div class="value">Active</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Growth</div>
+                            <div class="value">+12.5%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon progress">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3>Progress</h3>
+                            <p>Completion percentage</p>
+                        </div>
+                    </div>
+                    <div class="metric-value progress" id="cryptoPercentage">0%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Progress</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon target">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3>Remaining</h3>
+                            <p>Amount to target goal</p>
+                        </div>
+                    </div>
+                    <div class="metric-value target" id="roobicPercentage">$0</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="label">Target</div>
+                            <div class="value">$875,000</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Timeline</div>
+                            <div class="value">Q4 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Live Data</span>
+                </div>
+                <span>•</span>
+                <span>Auto-refresh every hour</span>
+                <span>•</span>
+                <span>Last updated: <span id="lastUpdate">-</span></span>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-US').format(Math.round(num));
+        }
+
+        function updateLastUpdateTime() {
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
+        }
+
+        function animateValue(element, start, end, duration) {
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                const current = start + (end - start) * easeOut;
+                
+                if (element.classList.contains('money') || element.classList.contains('target')) {
+                    element.textContent = `$${formatNumber(current)}`;
+                } else {
+                    element.textContent = `${Math.round(current)}%`;
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        function loadDataAndRefresh() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('hidden');
+
+            fetch('netCrypto.xlsx')
+                .then(response => response.arrayBuffer())
+                .then(buffer => {
+                    const workbook = XLSX.read(new Uint8Array(buffer), {type:'array'});
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    
+                    let grossDeposit = 0;
+                    let grossWithdrawal = 0;
+                    let cryptoTotal = 0;
+                    let roobicTotal = 0;
+                    
+                    const range = XLSX.utils.decode_range(sheet['!ref']);
+                    
+                    for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+                        const depositWithdrawal = sheet['E' + (rowNum + 1)]?.v;
+                        const amount = sheet['T' + (rowNum + 1)]?.v || 0;
+                        const cryptoType = sheet['N' + (rowNum + 1)]?.v;
+                        const roobicType = sheet['P' + (rowNum + 1)]?.v;
+                        
+                        if (cryptoType === 'Crypto' && depositWithdrawal === 'Deposit') {
+                            cryptoTotal += amount;
+                        }
+                        
+                        if (roobicType === 'Roobic') {
+                            roobicTotal += amount;
+                        }
+                        
+                        if (depositWithdrawal === 'Deposit') {
+                            grossDeposit += amount;
+                        } else if (depositWithdrawal === 'Withdrawal') {
+                            grossWithdrawal += amount;
+                        }
+                    }
+                    
+                    const netDeposit = grossDeposit - grossWithdrawal;
+                    const cryptoPercentage = ((cryptoTotal / 875000) * 100);
+                    const roobicPercentage = (875000 - roobicTotal);
+                    
+                    console.log('Gross Deposit:', grossDeposit);
+                    console.log('Crypto Total:', cryptoTotal);
+                    console.log('Roobic Total:', roobicTotal);
+                    
+                    // Hide loading with delay for smooth transition
+                    setTimeout(() => {
+                        loadingOverlay.classList.add('hidden');
+                        
+                        // Animate values with staggered timing
+                        setTimeout(() => {
+                            animateValue(document.getElementById('netDeposit'), 0, netDeposit, 2500);
+                        }, 200);
+                        
+                        setTimeout(() => {
+                            animateValue(document.getElementById('cryptoPercentage'), 0, cryptoPercentage, 2500);
+                            document.getElementById('progressPercent').textContent = Math.round(cryptoPercentage) + '%';
+                        }, 400);
+                        
+                        setTimeout(() => {
+                            animateValue(document.getElementById('roobicPercentage'), 0, roobicPercentage, 2500);
+                        }, 600);
+                        
+                        // Animate progress bar
+                        setTimeout(() => {
+                            const progressBar = document.getElementById('progressBar');
+                            progressBar.style.width = Math.min(cryptoPercentage, 100) + '%';
+                        }, 800);
+                        
+                        updateLastUpdateTime();
+                    }, 1500);
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    setTimeout(() => {
+                        document.getElementById('loadingOverlay').classList.add('hidden');
+                        
+                        // Show error state
+                        document.getElementById('netDeposit').textContent = 'Error';
+                        document.getElementById('cryptoPercentage').textContent = 'Error';
+                        document.getElementById('roobicPercentage').textContent = 'Error';
+                    }, 1000);
+                });
+        }
+
+        window.onload = function() {
+            loadDataAndRefresh();
+            setInterval(loadDataAndRefresh, 3600000); // Update every hour
+        };
+    </script>
 </body>
 </html>
