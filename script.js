@@ -49,7 +49,7 @@ window.onload = function() {
         // Отображение результатов на странице
         document.getElementById('netDeposit').innerText = 'Money IN : ' + netDeposit.toFixed(0) +'$'; // Отображаем чистый депозит
         document.getElementById('cryptoPercentage').innerText = 'Progress : ' + cryptoPercentage + '%';
-        document.getElementById('roobicPercentage').innerText = 'Team Target : 875.000$, So Still Missing: ' + roobicPercentage + '$';
+        document.getElementById('roobicPercentage').innerText = 'Team Target : 1.100.000$, So Still Missing: ' + roobicPercentage + '$';
     })
     .catch(error => console.error(error));
 
