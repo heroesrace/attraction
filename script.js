@@ -39,8 +39,8 @@ window.onload = function() {
         
         const netDeposit = grossDeposit - grossWithdrawal; // Вычисляем чистый депозит
 
-        const cryptoPercentage = ((cryptoTotal / 875000) * 100).toFixed(0);
-        const roobicPercentage = (875000 - roobicTotal) ;
+        const cryptoPercentage = ((cryptoTotal / 1100000) * 100).toFixed(0);
+        const roobicPercentage = (1100000 - roobicTotal) ;
 
         console.log(grossDeposit);
         console.log(cryptoTotal);
