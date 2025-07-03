@@ -39,8 +39,8 @@ window.onload = function() {
         
         const netDeposit = grossDeposit - grossWithdrawal; // Вычисляем чистый депозит
 
-        const cryptoPercentage = ((cryptoTotal / 1100000) * 100).toFixed(0);
-        const roobicPercentage = (1100000 - roobicTotal) ;
+        const cryptoPercentage = ((cryptoTotal / 1075000) * 100).toFixed(0);
+        const roobicPercentage = (1075000 - roobicTotal) ;
 
         console.log(grossDeposit);
         console.log(cryptoTotal);
@@ -49,7 +49,7 @@ window.onload = function() {
         // Отображение результатов на странице
         document.getElementById('netDeposit').innerText = 'Money IN : ' + netDeposit.toFixed(0) +'$'; // Отображаем чистый депозит
         document.getElementById('cryptoPercentage').innerText = 'Progress : ' + cryptoPercentage + '%';
-        document.getElementById('roobicPercentage').innerText = 'Team Target : 1.100.000$, So Still Missing: ' + roobicPercentage + '$';
+        document.getElementById('roobicPercentage').innerText = 'Team Target : 1.075.000$, So Still Missing: ' + roobicPercentage + '$';
     })
     .catch(error => console.error(error));
 
